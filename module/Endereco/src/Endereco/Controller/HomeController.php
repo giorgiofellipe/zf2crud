@@ -8,7 +8,9 @@ use Zend\View\Model\ViewModel;
 class HomeController extends AbstractActionController {
 
     public function indexAction() {
-        return new ViewModel();
+        //return new ViewModel();
+        // redirecionar para action index
+        return $this->redirect()->toRoute('logradouros');
     }
     
     /**

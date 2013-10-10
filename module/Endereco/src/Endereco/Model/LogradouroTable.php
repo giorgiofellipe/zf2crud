@@ -62,7 +62,7 @@ class LogradouroTable extends AbstractTableGateway{
     {
         $data = array(
             'nome' => $logradouro->nome,
-            'cidcodigo' => $logradouro->cidcodigo,
+            'baicodigo' => $logradouro->baicodigo,
         );
         $logcodigo = (int) $logradouro->logcodigo;
         if ($logcodigo == 0) {

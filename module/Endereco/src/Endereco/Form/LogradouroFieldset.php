@@ -29,14 +29,14 @@ class LogradouroFieldset extends Fieldset
         ));
 
         $this->add(array(
-            'name' => 'cidcodigo',
+            'name' => 'baicodigo',
             'options' => array(
-                'label' => 'Cidade'
+                'label' => 'Bairro'
             ),
             'attributes' => array(
                 'required' => 'required',
                 'class' => 'form-control',
-                'placeholder' => 'Cidade',
+                'placeholder' => 'Bairro',
             )
         ));
     }
@@ -50,7 +50,7 @@ class LogradouroFieldset extends Fieldset
             'nome' => array(
                 'required' => true,
             ),
-            'cidcodigo' => array(
+            'baicodigo' => array(
                 'required' => true,
             )
         );

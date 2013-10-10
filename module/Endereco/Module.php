@@ -60,7 +60,7 @@ class Module
                         array(
                             'logcodigo' => 'logcodigo',
                             'nome'      => 'nome',
-                            'cidcodigo' => 'cidcodigo'
+                            'baicodigo' => 'baicodigo'
                         ));
                     $rowObjectPrototype = new \Endereco\Model\Logradouro;
                     $resultSet = new \Zend\Db\ResultSet\HydratingResultSet(

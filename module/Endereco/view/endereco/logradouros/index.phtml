@@ -18,7 +18,7 @@
             <tr>
                 <th>#</th>
                 <th>Nome</th>
-                <th>Cidade</th>
+                <th>Bairro</th>
                 <th>Ação</th> 
             </tr>
         </thead>
@@ -28,7 +28,7 @@
                 <tr>
                     <td><?php echo $this->escapeHtml($logradouro->logcodigo);?></td>
                     <td><?php echo $this->escapeHtml($logradouro->nome);?></td>
-                    <td><?php echo $this->escapeHtml($logradouro->cidcodigo);?></td>
+                    <td><?php echo $this->escapeHtml($logradouro->baicodigo);?></td>
                     <td>
                         <a class="btn btn-xs btn-info" title="Visualizar" href="<?php echo $this->url('logradouros', array("action" => "detalhes", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-new-window"></span></a>
                         <a class="btn btn-xs btn-warning" title="Editar" href="<?php echo $this->url('logradouros', array("action" => "editar", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-edit"></span></a>
