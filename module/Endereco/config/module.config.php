@@ -5,54 +5,54 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'HomeController' => 'Endereco\Controller\HomeController',
-            'ContatosController'    => 'Endereco\Controller\ContatosController'
+            'LogradourosController'    => 'Endereco\Controller\LogradourosController'
         ),
     ),
 
-# definir e gerenciar rotas
-'router' => array(
-    'routes' => array(
-        # literal para action index home
-        'home' => array(
-            'type'      => 'Literal',
-            'options'   => array(
-                'route'    => '/',
-                'defaults' => array(
-                    'controller' => 'HomeController',
-                    'action'     => 'index',
+    # definir e gerenciar rotas
+    'router' => array(
+        'routes' => array(
+            # literal para action index home
+            'home' => array(
+                'type'      => 'Literal',
+                'options'   => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'HomeController',
+                        'action'     => 'index',
+                    ),
                 ),
             ),
-        ),
- 
-        # literal para action sobre home
-        'sobre' => array(
-            'type'      => 'Literal',
-            'options'   => array(
-                'route'    => '/sobre',
-                'defaults' => array(
-                    'controller' => 'HomeController',
-                    'action'     => 'sobre',
+
+            # literal para action sobre home
+            'sobre' => array(
+                'type'      => 'Literal',
+                'options'   => array(
+                    'route'    => '/sobre',
+                    'defaults' => array(
+                        'controller' => 'HomeController',
+                        'action'     => 'sobre',
+                    ),
                 ),
             ),
-        ),
- 
-        # segment para controller contatos
-        'contatos' => array(
-            'type'      => 'Segment',
-            'options'   => array(
-                'route'    => '/contatos[/:action][/:id]',
-                'constraints' => array(
-                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    'id'     => '[0-9]+',
-                ),
-                'defaults' => array(
-                    'controller' => 'ContatosController',
-                    'action'     => 'index',
+
+            # segment para controller logradouros
+            'logradouros' => array(
+                'type'      => 'Segment',
+                'options'   => array(
+                    'route'    => '/logradouros[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'LogradourosController',
+                        'action'     => 'index',
+                    ),
                 ),
             ),
         ),
     ),
-),
 
     # definir e gerenciar servicos
     'service_manager' => array(
@@ -76,6 +76,9 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'template_map' => array(
+            'paginator-slide' => __DIR__ . '/../view/layout/slidePaginator.phtml',
         ),
     ),
 );

@@ -1,0 +1,31 @@
+<?php $form->prepare(); 
+//ensure validation error messages are available, 
+//and prepares any elements and/or fieldsets that 
+//require preparation.
+?>
+<?php echo $this->form()->closeTag($form); ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title">
+            Editar Logradouro           
+        </div>
+    </div>
+    <?php echo $this->form()->openTag($form); ?>
+    <?php $Logradouro = $form->get('Logradouro'); ?>
+        <div class="panel-body">
+            <div class="form-group">
+                <?php echo $this->formRow($Logradouro->get('nome')); ?>
+            </div>
+
+            <div class="form-group">
+                <?php echo $this->formRow($Logradouro->get('cidcodigo')); ?>
+            </div>
+        </div>
+        <?php echo $this->formHidden($form->get('csrf')); ?>
+        <div class="panel-footer">
+            <?php echo $this->formInput($form->get('submit')); ?>
+            <a href="<?php echo $this->url('logradouros'); ?>" class="btn btn-default">Voltar</a>
+        </div>
+    </form>
+</div>

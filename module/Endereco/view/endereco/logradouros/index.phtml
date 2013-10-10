@@ -1,20 +1,6 @@
 <div class="topo-table">
     <a href="<?php echo $this->url('logradouros', array('action' => 'novo'))?>" class="btn btn-success" title="Novo"><span class="glyphicon glyphicon-plus"></span></a>
 
-    <div class="btn-group" title="Quantidades por Página">
-        <button type="button" class="btn btn-default">005</button>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu pull-right" style="min-width: 75px" role="menu">
-            <li class="active"><a href="#">005</a></li>
-            <li><a href="#">010</a></li>
-            <li><a href="#">025</a></li>
-            <li><a href="#">050</a></li>
-            <li><a href="#">100</a></li>
-        </ul>
-    </div>
-
     <form class="form-inline pull-right" role="form">
         <div class="form-group">
             <label class="sr-only" for="localizar">Buscar...</label>
@@ -38,29 +24,25 @@
         </thead>
 
         <tbody>
-            <?php for ($i = 1; $i <= 5; $i++): ?>
+            <?php foreach ($this->paginator as $logradouro) : ?>
                 <tr>
-                    <td><?php echo $i; ?></td>
-                    <td>Rua <?php echo $i; ?></td>
-                    <td>1</td>
+                    <td><?php echo $this->escapeHtml($logradouro->logcodigo);?></td>
+                    <td><?php echo $this->escapeHtml($logradouro->nome);?></td>
+                    <td><?php echo $this->escapeHtml($logradouro->cidcodigo);?></td>
                     <td>
-                        <a class="btn btn-xs btn-info" title="Visualizar" href="<?php echo $this->url('logradouros', array("action" => "detalhes", "id" => $i,)); ?>"><span class="glyphicon glyphicon-new-window"></span></a>
-                        <a class="btn btn-xs btn-warning" title="Editar" href="<?php echo $this->url('logradouros', array("action" => "editar", "id" => $i,)); ?>"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a class="btn btn-xs btn-danger" title="Deletar" href="<?php echo $this->url('logradouros', array("action" => "deletar", "id" => $i,)); ?>"><span class="glyphicon glyphicon-floppy-remove"></span></a>
+                        <a class="btn btn-xs btn-info" title="Visualizar" href="<?php echo $this->url('logradouros', array("action" => "detalhes", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-new-window"></span></a>
+                        <a class="btn btn-xs btn-warning" title="Editar" href="<?php echo $this->url('logradouros', array("action" => "editar", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-xs btn-danger" title="Deletar" href="<?php echo $this->url('logradouros', array("action" => "deletar", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-floppy-remove"></span></a>
                     </td>
                 </tr>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
-
-    <ul class="pagination pull-right">
-        <li><a href="#">Anterior</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">Próximo</a></li>
-    </ul>
+    <?php
+        echo $this->paginationControl(
+                $this->paginator, 'Sliding', 'paginator-slide', array()
+        );
+    ?>
 </div>
 
 <?php $this->headScript()->captureStart(); ?>
