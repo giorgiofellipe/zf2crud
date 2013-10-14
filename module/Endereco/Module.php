@@ -54,22 +54,6 @@ class Module
                     $table = new LogradouroTable($tableGateway);
                     return $table;
                 },
-                'LogradouroTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $hydrator = new \Endereco\Hydrator\TableEntityMapper(
-                        array(
-                            'logcodigo' => 'logcodigo',
-                            'nome'      => 'nome',
-                            'baicodigo' => 'baicodigo'
-                        ));
-                    $rowObjectPrototype = new \Endereco\Model\Logradouro;
-                    $resultSet = new \Zend\Db\ResultSet\HydratingResultSet(
-                        $hydrator, $rowObjectPrototype
-                    );
-                    return new \Zend\Db\TableGateway\TableGateway(
-                        'logradouro', $dbAdapter, null, $resultSet
-                    );
-                },
             )
         );
     }
