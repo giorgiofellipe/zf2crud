@@ -1,19 +1,19 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <div class="panel-title">
-            Detalhes Logradouro <?php echo $this->id; ?>            
+            Detalhes Logradouro <?php echo $this->logradouro->getLogcodigo(); ?>            
         </div>
     </div>
     <div class="panel-body">
         <dl class="dl-horizontal">
             <dt>Nome:</dt>
-            <dd><?php echo $this->logradouro->nome; ?></dd>
+            <dd><?php echo $this->logradouro->getNome(); ?></dd>
             <dt>Bairro:</dt>
-            <dd><?php echo $this->logradouro->baicodigo; ?></dd>
+            <dd><?php echo $this->logradouro->getBairro()->getNome(); ?></dd>
         </dl>
     </div>
     <div class="panel-footer">
-        <a href="<?php echo $this->url('logradouros', array('action' => 'editar', 'id' => $this->id)); ?>" class="btn btn-warning btn-sm">Editar Contato</a>
+        <a href="<?php echo $this->url('logradouros', array('action' => 'editar', 'id' => $this->logradouro->getLogcodigo())); ?>" class="btn btn-warning btn-sm">Editar Contato</a>
         <a href="<?php echo $this->url('logradouros'); ?>" class="btn btn-default btn-sm">Voltar</a>
     </div>
 </div>

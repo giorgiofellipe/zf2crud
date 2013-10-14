@@ -2,15 +2,18 @@
 
 namespace Endereco\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Endereco\Controller\EntityUsingController;
 use Zend\View\Model\ViewModel;
-use Endereco\Model\Logradouro;
+use DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity;
+use Zend\Paginator\Paginator;
+use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
 
-class LogradourosController extends AbstractActionController
+class LogradourosController extends EntityUsingController
 {
     protected $logradouroTable;
     protected $_createLogradouroForm;
-
+    
     protected function _getCreateLogradouroForm()
     {
         if (!$this->_createLogradouroForm) {
@@ -26,8 +29,23 @@ class LogradourosController extends AbstractActionController
         $this->_createLogradouroForm = $createLogradouroForm;
     }
     
-    // GET /contatos
     public function indexAction() {
+        $logradouros = $this->getEntityManager()->createQueryBuilder()
+            ->select('t')
+            ->from('Endereco\Entity\Logradouro', 't')
+            ->orderBy('t.nome', 'ASC');
+
+        $doctrinePaginator = new DoctrinePaginator($logradouros);
+        $paginatorAdapter = new PaginatorAdapter($doctrinePaginator);
+        $paginator = new Paginator($paginatorAdapter);
+        $paginator->setCurrentPageNumber($this->params()->fromRoute('page'));
+        return new ViewModel(array(
+            'paginator' => $paginator
+        ));
+    }
+    
+    // GET /contatos
+    public function indexActionOLD() {
         $sm = $this->getServiceLocator();
         if (!$this->logradouroTable) {
             $this->logradouroTable = new \Endereco\Model\LogradouroTable (
@@ -47,11 +65,46 @@ class LogradourosController extends AbstractActionController
             'paginator' => $paginator
         ));
     }
+    
+    public function novoAction() {
+        $logradouro = new \Endereco\Entity\Logradouro();
 
+        if ($this->params('id') > 0) {
+            $logradouro = $this->getEntityManager()->getRepository('Endereco\Entity\Logradouro')->find($this->params('id'));
+        }
+
+        $form = new \Endereco\Form\NovoLogradouro($this->getEntityManager());
+        $form->setHydrator(new DoctrineEntity($this->getEntityManager(),'Endereco\Entity\Logradouro'));
+        $form->bind($logradouro);
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setInputFilter($logradouro->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $em = $this->getEntityManager();
+
+                $em->persist($logradouro);
+                $em->flush();
+
+                $this->flashMessenger()->addSuccessMessage('Logradouro salvo');
+
+                return $this->redirect()->toRoute('logradouros');
+            }
+        }
+        return new ViewModel(array(
+            'form' => $form
+        ));
+    }
+    
     // GET /contatos/novo
-    public function novoAction()
-    {
+    public function novoActionOLD()
+    {   
         $form = $this->_getCreateLogradouroForm();
+        $objectManager = $this
+            ->getServiceLocator()
+            ->get('Doctrine\ORM\EntityManager');
         $Logradouro = new Logradouro();
         $form->bind($Logradouro);
         $sm = $this->getServiceLocator();
@@ -83,9 +136,26 @@ class LogradourosController extends AbstractActionController
 
         return new ViewModel(array('form' => $form));
     }
+    
+    public function detalhesAction() {
+        $logradouro = new \Endereco\Entity\Logradouro();
+
+        if ($this->params('id') > 0) {
+            $logradouro = $this->getEntityManager()->getRepository('Endereco\Entity\Logradouro')->find($this->params('id'));
+        } else {
+            // adicionar mensagem
+            $this->flashMessenger()->addMessage("Logradouro não encotrado");
+
+            // redirecionar para action index
+            return $this->redirect()->toRoute('logradouros');
+        }
+        return new ViewModel(array(
+            'logradouro' => $logradouro
+        ));
+    }
 
     // GET /contatos/detalhes/id
-    public function detalhesAction()
+    public function detalhesActionOLD()
     {
         // filtra id passsado pela url
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -107,7 +177,7 @@ class LogradourosController extends AbstractActionController
                 
         // 2 - solicitar form com dados desse contato encontrado
         //$form = $this->_getCreateLogradouroForm();
-        $Logradouro = new Logradouro();
+        $Logradouro = new \Endereco\Entity\Logradouro();
         $Logradouro->exchangeArray($LogradouroTable->getLogradouro($id));
         // formulário com dados preenchidos
         //$form->bind($Logradouro);
@@ -116,8 +186,12 @@ class LogradourosController extends AbstractActionController
         return array('id' => $id, 'logradouro' => $Logradouro);
     }
 
+    public function editarAction() {
+        return $this->novoAction();
+    }
+    
     // GET /contatos/editar/id
-    public function editarAction()
+    public function editarActionOLD()
     {
         // filtra id passsado pela url
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -175,8 +249,22 @@ class LogradourosController extends AbstractActionController
         }
     }
 
+    public function deletarAction() {
+        $logradouro = $this->getEntityManager()->getRepository('Endereco\Entity\Logradouro')->find($this->params('id'));
+
+        if ($logradouro) {
+            $em = $this->getEntityManager();
+            $em->remove($logradouro);
+            $em->flush();
+
+            $this->flashMessenger()->addSuccessMessage('Logradouro deletado');
+        }
+
+        return $this->redirect()->toRoute('logradouros');
+    }
+    
     // DELETE /contatos/deletar/id
-    public function deletarAction()
+    public function deletarActionOLD()
     {
         // filtra id passsado pela url
         $id = (int) $this->params()->fromRoute('id', 0);

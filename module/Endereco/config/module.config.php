@@ -1,6 +1,21 @@
 <?php
 
 return array(
+    'doctrine' => array(
+        'driver' => array(
+          'application_entities' => array(
+            'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+            'cache' => 'array',
+            'paths' => array(__DIR__ . '/../src/Endereco/Entity')
+          ),
+
+          'orm_default' => array(
+            'drivers' => array(
+              'Endereco\Entity' => 'application_entities'
+            )
+          )
+        )
+    ),
     # definir e gerenciar controllers
     'controllers' => array(
         'invokables' => array(

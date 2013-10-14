@@ -7,7 +7,10 @@
  */
 return array(
     'modules' => array(
-        'Endereco'
+        'Endereco',
+		'ZendDeveloperTools',
+        'DoctrineModule',
+        'DoctrineORMModule',
         ),
     'module_listener_options' => array(
         'module_paths' => array(

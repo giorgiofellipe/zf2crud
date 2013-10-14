@@ -26,13 +26,13 @@
         <tbody>
             <?php foreach ($this->paginator as $logradouro) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($logradouro->logcodigo);?></td>
-                    <td><?php echo $this->escapeHtml($logradouro->nome);?></td>
-                    <td><?php echo $this->escapeHtml($logradouro->baicodigo);?></td>
+                    <td><?php echo $this->escapeHtml($logradouro->getLogcodigo());?></td>
+                    <td><?php echo $this->escapeHtml($logradouro->getNome());?></td>
+                    <td><?php echo $this->escapeHtml($logradouro->getBairro()->getNome());?></td>
                     <td>
-                        <a class="btn btn-xs btn-info" title="Visualizar" href="<?php echo $this->url('logradouros', array("action" => "detalhes", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-new-window"></span></a>
-                        <a class="btn btn-xs btn-warning" title="Editar" href="<?php echo $this->url('logradouros', array("action" => "editar", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a class="btn btn-xs btn-danger" title="Deletar" href="<?php echo $this->url('logradouros', array("action" => "deletar", "id" => $logradouro->logcodigo,)); ?>"><span class="glyphicon glyphicon-floppy-remove"></span></a>
+                        <a class="btn btn-xs btn-info" title="Visualizar" href="<?php echo $this->url('logradouros', array("action" => "detalhes", "id" => $logradouro->getLogcodigo(),)); ?>"><span class="glyphicon glyphicon-new-window"></span></a>
+                        <a class="btn btn-xs btn-warning" title="Editar" href="<?php echo $this->url('logradouros', array("action" => "editar", "id" => $logradouro->getLogcodigo(),)); ?>"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-xs btn-danger" title="Deletar" href="<?php echo $this->url('logradouros', array("action" => "deletar", "id" => $logradouro->getLogcodigo(),)); ?>"><span class="glyphicon glyphicon-floppy-remove"></span></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

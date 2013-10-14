@@ -12,14 +12,13 @@
         </div>
     </div>
     <?php echo $this->form()->openTag($form); ?>
-    <?php $Logradouro = $form->get('Logradouro'); ?>
         <div class="panel-body">
             <div class="form-group">
-                <?php echo $this->formRow($Logradouro->get('nome')); ?>
+                <?php echo $this->formRow($form->get('nome')); ?>
             </div>
 
             <div class="form-group">
-                <?php echo $this->formRow($Logradouro->get('baicodigo')); ?>
+                <?php echo $this->formRow($form->get('bairro')); ?>
             </div>
         </div>
         <?php echo $this->formHidden($form->get('csrf')); ?>

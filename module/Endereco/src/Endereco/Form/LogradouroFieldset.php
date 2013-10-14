@@ -2,7 +2,7 @@
 
 namespace Endereco\Form;
 
-use Endereco\Model\Logradouro;
+use Endereco\Entity\Logradouro;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ObjectProperty as ObjectPropertyHydrator;
